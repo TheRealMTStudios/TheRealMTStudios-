@@ -1,0 +1,33 @@
+-- Save this code to a Pastebin or your preferred hosting site
+local player = game.Players.LocalPlayer
+local pGui = player:WaitForChild("PlayerGui")
+
+-- Cleanup existing UI if it exists
+if pGui:FindFirstChild("SpawnGui") then pGui.SpawnGui:Destroy() end
+
+local sg = Instance.new("ScreenGui", pGui)
+sg.Name = "SpawnGui"
+sg.ResetOnSpawn = false
+
+local btn = Instance.new("TextButton", sg)
+btn.Size = UDim2.new(0, 250, 0, 60)
+btn.Position = UDim2.new(0.5, -125, 0.8, -30)
+btn.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+btn.TextColor3 = Color3.new(1, 1, 1)
+btn.Text = "Spawn Garama and Madungdung"
+btn.BorderSizePixel = 2
+
+btn.MouseButton1Click:Connect(function()
+    local model = game.ReplicatedStorage:FindFirstChild("GaramaAndMadungdung")
+    if model then
+        local clone = model:Clone()
+        clone.Parent = workspace
+        local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+        if hrp then
+            clone:SetPrimaryPartCFrame(hrp.CFrame * CFrame.new(0, 0, -10))
+        end
+        print("Model Spawned!")
+    else
+        warn("Model 'GaramaAndMadungdung' not found in ReplicatedStorage.")
+    end
+end)
